@@ -1,20 +1,17 @@
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 3000
+// server.js
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = process.env.PORT || 3000;
 
-var LoremIpsum = require('lorem-ipsum').LoremIpsum;
+// Serve static files (like CSS, JS, images if needed)
+app.use(express.static(path.join(__dirname, 'public')));
 
-var lorem = new LoremIpsum({
-  sentencesPerParagraph: {
-    max: 8,
-    min: 4
-  },
-  wordsPerSentence: {
-    max: 16,
-    min: 4
-  }
+// Serve the HTML landing page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.get('/', (req, res) => res.send(lorem.generateParagraphs(7)))
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => {
+  console.log(`Aiminions landing page running at http://localhost:${port}`);
+});
